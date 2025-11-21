@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
-class HomeController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -29,5 +30,21 @@ class HomeController extends Controller
             ->latest()
             ->paginate(5);
         return view('posts.index', compact('posts'));
+    }
+
+    public function show()
+    {
+        return view('posts.show');
+    }
+
+    public function create()
+    {
+        return view('posts.create');
+    }
+
+    public function save(Request $request)
+    {
+        User::query()->create($request->all());
+        return redirect()->route('client.index');
     }
 }
